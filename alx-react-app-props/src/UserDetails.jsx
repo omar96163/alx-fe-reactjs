@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { UserContext } from "./UserContext";
 
-function UserDetails({ userData }) {
+function UserDetails() {
     const useData =  useContext(UserContext)
     return (
       <div>
