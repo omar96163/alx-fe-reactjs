@@ -1,17 +1,24 @@
 // src/App.jsx
 import React from 'react';
-import SearchBar from './components/SearchBar';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import RecipeList from './components/RecipeList';
+import RecipeDetails from './components/RecipeDetails';
 import AddRecipeForm from './components/AddRecipeForm';
+import SearchBar from './components/SearchBar';
 
 const App = () => {
   return (
-    <div style={{ padding: '20px' }}>
-      <h1>Recipe Sharing Application</h1>
-      <SearchBar />
-      <AddRecipeForm />
-      <RecipeList />
-    </div>
+    <Router>
+      <div style={{ padding: '20px' }}>
+        <h1>Recipe Sharing Application</h1>
+        <SearchBar />
+        <Routes>
+          <Route path="/" element={<RecipeList />} />
+          <Route path="/recipes/:id" element={<RecipeDetails />} />
+        </Routes>
+        <AddRecipeForm />
+      </div>
+    </Router>
   );
 };
 
