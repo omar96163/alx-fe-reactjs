@@ -1,5 +1,4 @@
-// src/recipeStore.js
-import create from 'zustand';
+import { create } from "zustand";
 
 const useRecipeStore = create((set) => ({
   recipes: [],
@@ -15,12 +14,19 @@ const useRecipeStore = create((set) => ({
   recommendations: [],
   generateRecommendations: () =>
     set((state) => {
-      // Example recommendation logic: Get recipes similar to favorites
       const recommended = state.recipes.filter((recipe) =>
         state.favorites.includes(recipe.id) && Math.random() > 0.5
       );
       return { recommendations: recommended };
     }),
+  addRecipe: (recipe) =>
+    set((state) => ({
+      recipes: [...state.recipes, recipe],
+    })),
+  setRecipes: (recipes) =>
+    set(() => ({
+      recipes,
+    })),
 }));
 
 export default useRecipeStore;
