@@ -1,7 +1,7 @@
 import React from 'react'
 import { Navigate } from 'react-router-dom'
 
-function ProtectedRoute({ isAuthenticated, children }) {
+function useAuth({ isAuthenticated, children }) {
   
   isAuthenticated = true
     
@@ -10,4 +10,4 @@ function ProtectedRoute({ isAuthenticated, children }) {
   )
 }
 
-export default ProtectedRoute
+export default useAuth

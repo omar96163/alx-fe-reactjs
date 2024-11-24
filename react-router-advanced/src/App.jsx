@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
 import Blog from "./components/Blog";
-import ProtectedRoute from "./components/ProtectedRoute";
+import useAuth from "./components/ProtectedRoute";
 
 function App() {
 
@@ -14,7 +14,7 @@ function App() {
       </nav>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/profile/*" element={<ProtectedRoute isAuthenticated ><Profile /></ProtectedRoute>} />
+        <Route path="/profile/*" element={<useAuth isAuthenticated ><Profile /></useAuth>} />
         <Route path="/blog/:id" element={<Blog />} />
       </Routes>
     </Router>
