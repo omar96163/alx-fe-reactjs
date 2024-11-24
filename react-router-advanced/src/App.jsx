@@ -12,7 +12,7 @@ function App() {
   return (
     <Router>
       <nav>
-        <Link to="/">Home</Link> | <Link to="/profile">Profile</Link> | <Link to="/blog/1">Blog</Link>
+        <Link to="/">Home</Link> | <Link to="/profile">Profile</Link> | <Link to="/blog/1">BlogPost</Link>
       </nav>
       <Routes>
         <Route path="/" element={<Home />} />
