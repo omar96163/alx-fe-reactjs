@@ -10,15 +10,16 @@ function PostsComponent() {
     return response.json();
   };
 
-  const { data, isLoading, error } = useQuery(["posts"], fetchPosts, {
+  const { data, isLoading, isError, error } = useQuery(["posts"], fetchPosts, {
     staleTime: 60000,
     cacheTime: 300000, 
-    refetchOnWindowFocus: false, 
+    refetchOnWindowFocus: false,
     keepPreviousData: true,
   });
 
   if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+
+  if (isError) return <p>Error: {error.message}</p>;
 
   return (
     <div>
