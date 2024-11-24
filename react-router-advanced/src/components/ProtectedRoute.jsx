@@ -1,7 +1,7 @@
 import React from 'react'
 import { Navigate } from 'react-router-dom'
 
-function useAuth({ isAuthenticated, children }) {
+function UseAuth({ isAuthenticated, children }) {
   
   isAuthenticated = true
     
@@ -10,4 +10,4 @@ function useAuth({ isAuthenticated, children }) {
   )
 }
 
-export default useAuth
+export default UseAuth
