@@ -7,8 +7,6 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
 
-  const isAuthenticated = true
-  
   return (
     <Router>
       <nav>
@@ -16,7 +14,7 @@ function App() {
       </nav>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/profile/*" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Profile /></ProtectedRoute>} />
+        <Route path="/profile/*" element={<ProtectedRoute isAuthenticated ><Profile /></ProtectedRoute>} />
         <Route path="/blog/:id" element={<Blog />} />
       </Routes>
     </Router>
