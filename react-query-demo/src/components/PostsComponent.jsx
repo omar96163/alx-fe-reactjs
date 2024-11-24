@@ -10,28 +10,22 @@ function PostsComponent() {
     return response.json();
   };
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["posts"], 
-    queryFn: fetchPosts, 
+  const { data, isLoading, error } = useQuery(["posts"], fetchPosts, {
+    staleTime: 60000,
+    cacheTime: 300000, 
+    refetchOnWindowFocus: false, 
+    keepPreviousData: true,
   });
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-
-  if (isError) {
-    return <p>There was an error fetching the posts.</p>;
-  }
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
 
   return (
     <div>
-      <h1>Posts</h1>
+      <h2>Posts</h2>
       <ul>
         {data.map((post) => (
-          <li key={post.id}>
-            <h3>{post.title}</h3>
-            <p>{post.body}</p>
-          </li>
+          <li key={post.id}>{post.title}</li>
         ))}
       </ul>
     </div>
