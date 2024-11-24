@@ -4,15 +4,9 @@ import * as Yup from 'yup';
 
 function FormikForm() {
   const validationSchema = Yup.object({
-    username: Yup.string()
-      .required('Username is required')
-      .min(3, 'Username must be at least 3 characters'),
-    email: Yup.string()
-      .required('Email is required')
-      .email('Invalid email format'),
-    password: Yup.string()
-      .required('Password is required')
-      .min(6, 'Password must be at least 6 characters'),
+    username: Yup.string().required('Username is required'),
+    email: Yup.string().required('Email is required'),
+    password: Yup.string().required('Password is required')
   });
 
   const initialValues = {
@@ -34,21 +28,18 @@ function FormikForm() {
       {() => (
         <Form>
           <div>
-            <label htmlFor="username">Username</label>
-            <Field type="text" id="username" name="username" />
-            <ErrorMessage name="username" component="div" className="error" />
+            <Field type="text" name="username" />
+            <ErrorMessage name="username" component="div" />
           </div>
 
           <div>
-            <label htmlFor="email">Email</label>
-            <Field type="email" id="email" name="email" />
-            <ErrorMessage name="email" component="div" className="error" />
+            <Field type="email" name="email" />
+            <ErrorMessage name="email" component="div" />
           </div>
 
           <div>
-            <label htmlFor="password">Password</label>
-            <Field type="password" id="password" name="password" />
-            <ErrorMessage name="password" component="div" className="error" />
+            <Field type="password" name="password" />
+            <ErrorMessage name="password" component="div" />
           </div>
 
           <button type="submit">Register</button>
