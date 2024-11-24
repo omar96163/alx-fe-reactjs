@@ -1,5 +1,5 @@
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 function PostsComponent() {
   const fetchPosts = async () => {
@@ -10,12 +10,18 @@ function PostsComponent() {
     return response.json();
   };
 
+  const queryClient = useQueryClient();
+
   const { data, isLoading, isError, error } = useQuery(["posts"], fetchPosts, {
     staleTime: 60000,
     cacheTime: 300000, 
-    refetchOnWindowFocus: false,
-    keepPreviousData: true,
+    refetchOnWindowFocus: false, 
+    keepPreviousData: true, 
   });
+
+  const handleRefetch = () => {
+    queryClient.invalidateQueries(["posts"]);
+  };
 
   if (isLoading) return <p>Loading...</p>;
 
@@ -24,6 +30,7 @@ function PostsComponent() {
   return (
     <div>
       <h2>Posts</h2>
+      <button onClick={handleRefetch}>Refetch Posts</button>
       <ul>
         {data.map((post) => (
           <li key={post.id}>{post.title}</li>
