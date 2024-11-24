@@ -12,7 +12,9 @@ function PostsComponent() {
 
   const queryClient = useQueryClient();
 
-  const { data, isLoading, isError, error } = useQuery(["posts"], fetchPosts, {
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["posts"],
+    queryFn: fetchPosts,  
     staleTime: 60000,
     cacheTime: 300000, 
     refetchOnWindowFocus: false, 
