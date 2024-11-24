@@ -1,5 +1,5 @@
 import { screen , fireEvent , render } from "@testing-library/react";
-import TodoList from "../components/TodoList";
+import TodoList from "./TodoList";
 import '@testing-library/jest-dom'
 
 
