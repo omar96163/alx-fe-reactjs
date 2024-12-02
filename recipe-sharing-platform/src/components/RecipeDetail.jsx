@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import data from "../data.json";
 
+
 const RecipeDetail = () => {
   const { id } = useParams();
   const [recipe, setRecipe] = useState([]);
@@ -10,6 +11,10 @@ const RecipeDetail = () => {
     const foundRecipe = data.find((item) => item.id === parseInt(id));
     setRecipe(foundRecipe);
   }, [id]);
+
+  if (!recipe) {
+    return <p>Recipe not found.</p>;
+  }
 
   return (
     <div className="max-w-4xl mx-auto p-6 shadow">
