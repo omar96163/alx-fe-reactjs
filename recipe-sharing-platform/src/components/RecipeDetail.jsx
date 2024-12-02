@@ -13,7 +13,11 @@ const RecipeDetail = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-6 shadow">
-      <img src={recipe.image} alt={recipe.title} className="w-full h-64 object-cover rounded-lg mb-4"/>
+      <img
+        src={recipe.image}
+        alt={recipe.title}
+        className="w-full h-64 object-cover rounded-lg mb-4"
+      />
       <h1 className="text-4xl font-bold mb-4 text-green-600">{recipe.title}</h1>
       <h2 className="text-2xl font-semibold mb-2">Ingredients:</h2>
       <ul className="list-disc list-inside mb-4">
