@@ -34,7 +34,7 @@ function Search() {
         throw new Error("No users found with the given criteria");
       }
     } catch (err) {
-      setError("Looks like we cant find users");
+      setError("Looks like we cant find the user");
     } finally {
       setLoading(false);
     }
