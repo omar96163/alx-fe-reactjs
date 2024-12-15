@@ -13,18 +13,22 @@ function Search() {
 
   const handleForm = async (e) => {
     e.preventDefault();
-    setLoading(true); 
-    setError(""); 
-    setUserData(null); 
+    setLoading(true);
+    setError("");
+    setUserData(null);
     try {
       const data = await fetchUserData(username);
-      setUserData(data);
+      if (data.login) {
+        setUserData(data);
+      } else {
+        throw new Error("User not found");
+      }
     } catch (err) {
-      setError("Looks like we can't find the user."); 
+      setError("Looks like we can't find the user.");
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
-    setUsername(""); 
+    setUsername("");
   };
 
   return (
@@ -38,16 +42,17 @@ function Search() {
         />
         <button type="submit">Submit</button>
       </form>
-      {loading && <p>Loading...</p>} 
-      {error && <p style={{ color: "red" }}>{error}</p>} 
+      {loading && <p>Loading...</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
       {userData && (
         <div style={{ marginTop: "20px", textAlign: "center" }}>
           <img
             src={userData.avatar_url}
-            alt={`${userData.name}'s avatar`}
+            alt={`${userData.login}'s avatar`}
             style={{ width: "150px", borderRadius: "50%" }}
           />
           <h2>{userData.name || "No Name Available"}</h2>
+          <p>Username: {userData.login}</p>
           <p>Followers: {userData.followers}</p>
           <p>Following: {userData.following}</p>
           <p>Public Repos: {userData.public_repos}</p>
