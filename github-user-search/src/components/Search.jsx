@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { fetchUserData } from "../services/githubService";
+import axios from "axios";
 
 const Search = () => {
-  const [username, setUsername] = useState("");
-  const [userData, setUserData] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -11,13 +11,15 @@ const Search = () => {
     e.preventDefault();
     setLoading(true);
     setError("");
-    setUserData(null);
+    setUsers([]);
 
     try {
-      const data = await fetchUserData(username);
-      setUserData(data);
+      const response = await axios.get(
+        `https://api.github.com/search/users?q=${searchTerm}`
+      );
+      setUsers(response.data.items || []);
     } catch (err) {
-      setError("Looks like we cant find the user");
+      setError("Looks like we cant find the users");
     } finally {
       setLoading(false);
     }
@@ -28,9 +30,9 @@ const Search = () => {
       <form onSubmit={handleSearch} className="mb-4">
         <input
           type="text"
-          placeholder="Enter GitHub username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          placeholder="Enter search term"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
           className="p-2 border rounded w-full"
         />
         <button
@@ -40,29 +42,38 @@ const Search = () => {
           Search
         </button>
       </form>
+
       {loading && <p>Loading...</p>}
       {error && <p className="text-red-500">{error}</p>}
-      {userData && (
-        <div className="mt-4 border p-4 rounded">
-          <img
-            src={userData.avatar_url}
-            alt="Avatar"
-            className="w-16 h-16 rounded-full"
-          />
-          <h3 className="text-lg font-bold">
-            {userData.name || "No Name Provided"}
-          </h3>
-          <p className="text-gray-600">Username: {userData.login}</p>
-          <p>
-            <a
-              href={userData.html_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-500"
-            >
-              View Profile
-            </a>
-          </p>
+
+      {users.length > 0 && (
+        <div className="mt-4">
+          <h2 className="text-lg font-bold">Search Results:</h2>
+          <ul className="mt-2 space-y-4">
+            {users.map((user) => (
+              <li
+                key={user.id}
+                className="flex items-center space-x-4 p-2 border rounded"
+              >
+                <img
+                  src={user.avatar_url}
+                  alt="Avatar"
+                  className="w-12 h-12 rounded-full"
+                />
+                <div>
+                  <h3 className="font-bold">{user.login}</h3>
+                  <a
+                    href={user.html_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-500"
+                  >
+                    View Profile
+                  </a>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </div>
