@@ -9,7 +9,7 @@ const BASE_URL = "https://api.github.com/search/users?q";
  * @param {number} minRepos - The minimum number of repositories filter.
  * @returns {Promise<Object>} - Returns the search results from the GitHub API.
  */
-export const fetchUsers = async (searchTerm, location = "", minRepos = 0) => {
+export const fetchUserData = async (searchTerm, location = "", minRepos = 0) => {
   try {
     // Build the query string based on provided parameters
     let query = `${searchTerm}`;
