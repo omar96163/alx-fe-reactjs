@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { fetchUsers } from "../services/githubService";
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [location, setLocation] = useState("");
+  const [minRepos, setMinRepos] = useState("");
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -14,10 +16,12 @@ const Search = () => {
     setUsers([]);
 
     try {
-      const response = await axios.get(
-        `https://api.github.com/search/users?q=${searchTerm}`
+      const data = await fetchUsers(
+        searchTerm,
+        location,
+        parseInt(minRepos, 10) || 0
       );
-      setUsers(response.data.items || []);
+      setUsers(data.items || []);
     } catch (err) {
       setError("Looks like we cant find the users");
     } finally {
@@ -27,12 +31,26 @@ const Search = () => {
 
   return (
     <div className="p-4 max-w-md mx-auto">
-      <form onSubmit={handleSearch} className="mb-4">
+      <form onSubmit={handleSearch} className="mb-4 space-y-2">
         <input
           type="text"
           placeholder="Enter search term"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          className="p-2 border rounded w-full"
+        />
+        <input
+          type="text"
+          placeholder="Enter location (optional)"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+          className="p-2 border rounded w-full"
+        />
+        <input
+          type="number"
+          placeholder="Minimum repositories (optional)"
+          value={minRepos}
+          onChange={(e) => setMinRepos(e.target.value)}
           className="p-2 border rounded w-full"
         />
         <button
