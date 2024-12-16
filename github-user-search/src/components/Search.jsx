@@ -11,11 +11,13 @@ const Search = () => {
     e.preventDefault();
     setLoading(true);
     setError("");
+    setUserData(null);
+
     try {
       const data = await fetchUserData(username);
       setUserData(data);
     } catch (err) {
-      setError(err.message);
+      setError("Looks like we cant find the user");
     } finally {
       setLoading(false);
     }
@@ -47,7 +49,10 @@ const Search = () => {
             alt="Avatar"
             className="w-16 h-16 rounded-full"
           />
-          <h3 className="text-lg font-bold">{userData.name}</h3>
+          <h3 className="text-lg font-bold">
+            {userData.name || "No Name Provided"}
+          </h3>
+          <p className="text-gray-600">Username: {userData.login}</p>
           <p>
             <a
               href={userData.html_url}
